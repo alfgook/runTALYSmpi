@@ -24,13 +24,13 @@ int main(int argc, char** argv) //int argc; char *argv[];
 {
     if(argc == 1) {
         std::cout << "no input files provided \n" <<
-        std:: cout << "example useage:\n" <<
-         << "mpirun -np 3 /dev/shm/run1 /dev/shm/run2 /dev/shm/run3 /dev/shm/run4: \n" <<
-         << "This command would run the 4 calculations on 3 processors.\n" <<
-         << "Note the use of a different directory for each calculation. \n" <<
-         << "Also note the use of the memory resident /dev/shm to perform calculations, \n" <<
-         << "you may place the directories anywhere, but the use of /dev/shm greatly  \n" <<
-         << "improves performance. " << std::endl;
+         "example useage:\n" <<
+         "mpirun -np 3 /dev/shm/run1 /dev/shm/run2 /dev/shm/run3 /dev/shm/run4: \n" <<
+         "This command would run the 4 calculations on 3 processors.\n" <<
+         "Note the use of a different directory for each calculation. \n" <<
+         "Also note the use of the memory resident /dev/shm to perform calculations, \n" <<
+         "you may place the directories anywhere, but the use of /dev/shm greatly  \n" <<
+         "improves performance. " << std::endl;
     }
     int nbr_of_ranks, rank;  
     MPI_Status Stat;
