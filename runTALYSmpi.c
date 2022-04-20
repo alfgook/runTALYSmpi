@@ -35,7 +35,22 @@ int main(int argc, char** argv) //int argc; char *argv[];
     int nbr_of_ranks, rank;  
     MPI_Status Stat;
 
+    MPI_Comm parent;
+    int parent_size;
+
     MPI_Init(&argc,&argv);
+    MPI_Comm_get_parent(&parent);
+    if( parent == MPI_COMM_NULL) {
+        std::cerr << "No parent" << std::endl;
+        exit(1);
+    }
+
+    MPI_Comm_remote_size(parent, &parent_size); 
+    if (parent_size != 1) {
+        std::cerr << "Something's wrong with the parent" << std::endl;
+        exit(1);
+    } 
+
     MPI_Comm_size(MPI_COMM_WORLD, &nbr_of_ranks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
@@ -67,6 +82,9 @@ int main(int argc, char** argv) //int argc; char *argv[];
 
         // perform the talys calculation
         system("talys < input > output");
+        //char wd[512];
+        //getcwd(wd,512);
+        //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << std::endl;
 
         // get the next job
         job_to_do += nbr_of_ranks;
