@@ -1,0 +1,15 @@
+#
+# n-fe56-xs
+#
+# General
+#
+projectile n
+element fe
+mass 56
+energy 0.1 30 10
+#
+#channels y
+#filechannels y
+#filetotal y
+#fileresidual y
+#outdiscrete y

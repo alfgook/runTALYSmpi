@@ -8,4 +8,12 @@ To run the example, do
 
 mpirun -np 1 Rscript --vanilla example.R
 
-observe that you need to start it with only 1 worker (-np 1), "start_mpi_worker" takes care of spawning the workers. Setting -np to a larger number will result in an error. 
+observe that you need to start it with only 1 worker (-np 1), "start_mpi_worker" takes care of spawning the workers. Setting -np to a larger number will result in an error.
+
+TO DO:
+
+1) Want to implement that the workers not only start a job in a given directory but also
+
+	1.1) definetely: parses the output given a certain needed output, passed from the calling R script, and gives it back to the master thread. In turn, the master thread will collect all the outputs and pass it back to the calling R script.
+
+	1.2) maybe: takes care of preparing the talys input files given some directions from the calling R script. This may however be better left to the user for a larger amount of flexibility in usage.
