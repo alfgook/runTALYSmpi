@@ -38,7 +38,8 @@ int main(int argc, char** argv) //int argc; char *argv[];
     MPI_Comm parent;
     int parent_size;
 
-    MPI_Init(&argc,&argv);
+    //MPI_Init(&argc,&argv);
+    MPI_Init(NULL,NULL);
     MPI_Comm_get_parent(&parent);
     if( parent == MPI_COMM_NULL) {
         std::cerr << "No parent" << std::endl;
@@ -53,6 +54,7 @@ int main(int argc, char** argv) //int argc; char *argv[];
 
     MPI_Comm_size(MPI_COMM_WORLD, &nbr_of_ranks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
 
     // first check that all the input files exists and that
     // all paths were provided as absolute paths
@@ -89,6 +91,7 @@ int main(int argc, char** argv) //int argc; char *argv[];
         // get the next job
         job_to_do += nbr_of_ranks;
     }
+    
     
     MPI_Finalize();
 

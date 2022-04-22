@@ -4,16 +4,17 @@
 
 #define MIN(x,y) ((x<y)?x:y)
 
-int start_mpi_workers(const int *number_of_workers, const char **worker_program, char **argv) 
+int start_mpi_workers(const char **worker_program, char *job_list[], const int *number_of_jobs, const int *number_of_workers) 
 { 
-   printf("argv = %s\n",argv[0]);
+
+   MPI_Init(NULL, NULL);  
+
    int world_size, universe_size, *universe_sizep, flag; 
    MPI_Comm everyone;           /* intercommunicator */ 
 
    int nbr_of_workers = (*number_of_workers);
+   int nbr_of_jobs = (*number_of_jobs);
 
-   int argc = 1;
-   MPI_Init(&argc, &argv); 
    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
    if (world_size != 1) {
@@ -36,13 +37,29 @@ int start_mpi_workers(const int *number_of_workers, const char **worker_program,
    }
 
    nbr_of_workers = MIN(nbr_of_workers,universe_size-1);
-   printf("nbr_of_workers = %d\n",nbr_of_workers);
-   MPI_Comm_spawn(worker_program[0], argv, nbr_of_workers, MPI_INFO_NULL, 0, MPI_COMM_SELF, &everyone, MPI_ERRCODES_IGNORE); 
 
+   // copy the list of jobs from the calling R-script and add a NULL pointer at the end
+   // this is required by MPI_Comm_spawn to calculate the number of arguments
+   char **argv = (char **) malloc((nbr_of_jobs+1) * sizeof(char *));
+   for(int i=0;i<nbr_of_jobs;i++) {
+      argv[i] = job_list[i];
+      // printf("argv[%d] = %s\n",i,argv[i]);
+   }
+   argv[nbr_of_jobs] = NULL;
+   MPI_Comm_spawn(worker_program[0],
+                     argv,
+                     nbr_of_workers,
+                     MPI_INFO_NULL,
+                     0,
+                     MPI_COMM_SELF,
+                     &everyone,
+                     MPI_ERRCODES_IGNORE);
+   
    // Could add parallel code here. The communicator "everyone" can be used to communicate with
    // the spawned processes, which have ranks 0,.. MPI_UNIVERSE_SIZE-1 in the remote group of 
-   // the intercommunicator "everyone". 
+   // the intercommunicator "everyone".
 
-   MPI_Finalize(); 
+   free(argv);
+   MPI_Finalize();
    return 0; 
 } 

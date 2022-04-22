@@ -2,7 +2,11 @@ dyn.load(paste0("start_mpi_workers", .Platform$dynlib.ext));
 
 run_talys = function(directories)
 {
-	.C("start_mpi_workers",as.integer(10),as.character("runTALYSmpi"),as.character(directories));
+	.C("start_mpi_workers",
+		worker_program = as.character("runTALYSmpi"),
+		job_list = as.character(directories),
+		number_of_jobs = as.integer(length(directories)),
+		number_of_workers = as.integer(length(directories)));
 }
 
 print("The master will now create some slave processes...")
