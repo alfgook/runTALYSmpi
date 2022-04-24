@@ -15,3 +15,7 @@ start_mpi_workers: start_mpi_workers.c
 
 clean:
 	rm -f ${EXECS} ${SHLIBS}
+
+install:
+	cp runTALYSmpi /usr/local/bin
+	

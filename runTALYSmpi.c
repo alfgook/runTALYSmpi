@@ -92,7 +92,9 @@ int main(int argc, char** argv) //int argc; char *argv[];
         job_to_do += nbr_of_ranks;
     }
     
-    
+    //send a message to the parent
+    MPI_Send(&rank, 1, MPI_INT, 0, 0, parent);
+
     MPI_Finalize();
 
     exit(0);
