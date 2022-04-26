@@ -5,10 +5,26 @@
 
 #define MIN(x,y) ((x<y)?x:y)
 
+int initalize_mpi() {
+   MPI_Init(NULL, NULL);
+   printf("mpi session initalized\n");
+   return 0;
+}
+
+int finalize_mpi() {
+   int init_flag;
+   MPI_Initialized(&init_flag);
+   if(init_flag) {
+      MPI_Finalize();
+      printf("the mpi session has been finalized\n");
+   }
+   return 0;
+}
+
 int start_mpi_workers(const char **worker_program, char *job_list[], const int *number_of_jobs, const int *number_of_workers) 
 { 
 
-   MPI_Init(NULL, NULL);  
+   //MPI_Init(NULL, NULL);  
 
    int world_size, universe_size, *universe_sizep, flag; 
    MPI_Comm everyone;           /* intercommunicator */ 
@@ -32,22 +48,21 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
       universe_size = *universe_sizep;
    }
 
-   printf("universe_size = %d\n",universe_size);
+   //printf("universe_size = %d\n",universe_size);
    if (universe_size == 1) {
       printf("No room to start workers");
       return 1;
    }
-
+   
    nbr_of_workers = MIN(nbr_of_workers,universe_size-1);
-   printf("nbr_of_workers = %d\n",nbr_of_workers);
-   printf("job_list[0] = %s\n",job_list[0]);
+   //printf("nbr_of_workers = %d\n",nbr_of_workers);
+   //printf("job_list[0] = %s\n",job_list[0]);
 
    // copy the list of jobs from the calling R-script and add a NULL pointer at the end
    // this is required by MPI_Comm_spawn to calculate the number of arguments
    char **argv = (char **) malloc((nbr_of_jobs+1) * sizeof(char *));
    for(int i=0;i<nbr_of_jobs;i++) {
       argv[i] = job_list[i];
-      printf("argv[%d] = %s\n",i,argv[i]);
    }
    argv[nbr_of_jobs] = NULL;
 
@@ -87,11 +102,11 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
    for(int worker=0;worker<nbr_of_workers;worker++) {
       int rank;
       MPI_Recv(&rank, 1, MPI_INT, worker, 0, everyone, MPI_STATUS_IGNORE);
-      printf("master received %d from worker %d\n",rank,worker);
+      //printf("master received %d from worker %d\n",rank,worker);
    }
    
 
    free(argv);
-   MPI_Finalize();
+   //MPI_Finalize();
    return 0; 
 } 
