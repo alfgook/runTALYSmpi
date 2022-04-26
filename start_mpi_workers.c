@@ -39,7 +39,8 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
       return 1;
    }
 
-   MPI_Attr_get(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe_sizep, &flag);
+   //MPI_Attr_get(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe_sizep, &flag);
+   MPI_Comm_get_attr(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe_sizep, &flag);
 
    if (!flag) { 
       printf("This MPI does not support UNIVERSE_SIZE."); 
@@ -53,7 +54,7 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
       printf("No room to start workers");
       return 1;
    }
-   
+
    nbr_of_workers = MIN(nbr_of_workers,universe_size-1);
    //printf("nbr_of_workers = %d\n",nbr_of_workers);
    //printf("job_list[0] = %s\n",job_list[0]);
