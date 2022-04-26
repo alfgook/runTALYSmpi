@@ -85,9 +85,9 @@ int main(int argc, char** argv) //int argc; char *argv[];
 
         // perform the talys calculation
         system("talys < input > output");
-        //char wd[512];
-        //getcwd(wd,512);
-        //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << std::endl;
+        char wd[512];
+        getcwd(wd,512);
+        std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << std::endl;
 
         // get the next job
         job_to_do += nbr_of_ranks;
