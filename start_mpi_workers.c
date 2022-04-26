@@ -58,6 +58,7 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
    nbr_of_workers = MIN(nbr_of_workers,universe_size-1);
    printf("nbr_of_workers = %d\n",nbr_of_workers);
    printf("nbr_of_jobs = %d\n",nbr_of_jobs);
+   printf("universe_size = %d\n",universe_size);
    //printf("job_list[0] = %s\n",job_list[0]);
 
    // copy the list of jobs from the calling R-script and add a NULL pointer at the end
