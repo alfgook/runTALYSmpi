@@ -39,8 +39,8 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
       return 1;
    }
 
-   //MPI_Attr_get(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe_sizep, &flag);
-   MPI_Comm_get_attr(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe_sizep, &flag);
+   MPI_Attr_get(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe_sizep, &flag);
+   //MPI_Comm_get_attr(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe_sizep, &flag);
 
    if (!flag) { 
       printf("This MPI does not support UNIVERSE_SIZE."); 
@@ -86,14 +86,14 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
                      MPI_ERRCODES_IGNORE);
 */
 
-   /*MPI_Comm_spawn(worker_program[0],
+   MPI_Comm_spawn(worker_program[0],
                      argv,
                      nbr_of_workers,
                      MPI_INFO_NULL, 
                      0,
                      MPI_COMM_SELF,
                      &everyone,
-                     MPI_ERRCODES_IGNORE);*/
+                     MPI_ERRCODES_IGNORE);
    
    // Could add parallel code here. The communicator "everyone" can be used to communicate with
    // the spawned processes, which have ranks 0,.. nbr_of_workers-1 in the remote group of 
@@ -102,11 +102,11 @@ int start_mpi_workers(const char **worker_program, char *job_list[], const int *
    //MPI_Barrier(everyone);
 
    printf("workers spawned... waiting...\n");
-   /*for(int worker=0;worker<nbr_of_workers;worker++) {
+   for(int worker=0;worker<nbr_of_workers;worker++) {
       int rank;
       MPI_Recv(&rank, 1, MPI_INT, worker, 0, everyone, MPI_STATUS_IGNORE);
       //printf("master received %d from worker %d\n",rank,worker);
-   }*/
+   }
    
 
    free(argv);
