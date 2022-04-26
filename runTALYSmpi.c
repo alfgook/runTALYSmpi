@@ -23,6 +23,12 @@ bool PathExists(const std::string &s)
 
 int main(int argc, char** argv) //int argc; char *argv[];
 {
+    int nbr_of_ranks, rank;  
+    MPI_Status Stat;
+
+    MPI_Comm parent;
+    int parent_size;
+
     if(argc == 1) {
         std::cout << "no input files provided \n" <<
          "example useage:\n" <<
@@ -33,11 +39,6 @@ int main(int argc, char** argv) //int argc; char *argv[];
          "you may place the directories anywhere, but the use of /dev/shm greatly  \n" <<
          "improves performance. " << std::endl;
     }
-    int nbr_of_ranks, rank;  
-    MPI_Status Stat;
-
-    MPI_Comm parent;
-    int parent_size;
 
     //MPI_Init(&argc,&argv);
     MPI_Init(NULL,NULL);
@@ -56,7 +57,7 @@ int main(int argc, char** argv) //int argc; char *argv[];
     MPI_Comm_size(MPI_COMM_WORLD, &nbr_of_ranks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-
+    std::cout << "worker " << rank << "/" << nbr_of_ranks << " : checking wd " << std::endl;
     // first check that all the input files exists and that
     // all paths were provided as absolute paths
     int nbr_of_jobs = argc - 1;
@@ -75,6 +76,7 @@ int main(int argc, char** argv) //int argc; char *argv[];
         }
         job_to_do += nbr_of_ranks;
     }
+    std::cout << "worker " << rank << "/" << nbr_of_ranks << " : wd ok " << std::endl;
 
     MPI_Barrier(MPI_COMM_WORLD);
     // perform the calculations
