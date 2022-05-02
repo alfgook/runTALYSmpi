@@ -23,7 +23,6 @@ bool PathExists(const std::string &s)
 
 int main(int argc, char** argv) //int argc; char *argv[];
 {
-    printf("runTALYSmpi main()");
     int nbr_of_ranks, rank;  
     MPI_Status Stat;
 
