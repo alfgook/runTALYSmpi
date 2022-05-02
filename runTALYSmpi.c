@@ -59,7 +59,7 @@ int main(int argc, char** argv) //int argc; char *argv[];
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     for(int i=0;i<argc;i++) {
-        std::cout << i << " : " << std::endl;
+        std::cout << i << " : " << argv[i] << std::endl;
     }
 
     std::cout << "worker " << rank << "/" << nbr_of_ranks << " : checking wd " << std::endl;
