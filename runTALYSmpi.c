@@ -92,11 +92,11 @@ int main(int argc, char** argv) //int argc; char *argv[];
 
         std::string cmd = talys_exe + " < input > output";
         // perform the talys calculation
-        system("talys < input > output");
+        //system("talys < input > output");
         //system(cmd.c_str());
         char wd[512];
         getcwd(wd,512);
-        //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << " : " << cmd << std::endl;
+        std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << " : " << cmd << std::endl;
 
         //std::cout << "test" << std::endl;
         // get the next job
