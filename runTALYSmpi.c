@@ -58,11 +58,11 @@ int main(int argc, char** argv) //int argc; char *argv[];
     MPI_Comm_size(MPI_COMM_WORLD, &nbr_of_ranks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    for(int i=0;i<argc;i++) {
+    /*for(int i=0;i<argc;i++) {
         std::cout << i << " : " << argv[i] << std::endl;
-    }
+    }*/
 
-    std::cout << "worker " << rank << "/" << nbr_of_ranks << " : checking wd " << std::endl;
+    //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : checking wd " << std::endl;
     // first check that all the input files exists and that
     // all paths were provided as absolute paths
     int nbr_of_jobs = argc - 2;
@@ -81,7 +81,7 @@ int main(int argc, char** argv) //int argc; char *argv[];
         }
         job_to_do += nbr_of_ranks;
     }
-    std::cout << "worker " << rank << "/" << nbr_of_ranks << " : wd ok " << std::endl;
+    //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : wd ok " << std::endl;
 
     MPI_Barrier(MPI_COMM_WORLD);
     // perform the calculations
@@ -97,9 +97,9 @@ int main(int argc, char** argv) //int argc; char *argv[];
         //system(cmd.c_str());
         char wd[512];
         getcwd(wd,512);
-        std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << " : " << cmd << std::endl;
+        //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << " : " << cmd << std::endl;
 
-        std::cout << "test" << std::endl;
+        //std::cout << "test" << std::endl;
         // get the next job
         job_to_do += nbr_of_ranks;
     }
