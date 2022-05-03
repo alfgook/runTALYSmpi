@@ -96,7 +96,7 @@ int main(int argc, char** argv) //int argc; char *argv[];
         //system(cmd.c_str());
         char wd[512];
         getcwd(wd,512);
-        std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << " : " << cmd << std::endl;
+        //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << " : " << cmd << std::endl;
 
         //std::cout << "test" << std::endl;
         // get the next job
