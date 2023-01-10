@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#wget "https://tendl.web.psi.ch/tendl_2019/talys/talys1.95.tar"
+wget "https://tendl.web.psi.ch/tendl_2019/talys/talys1.95.tar"
 tar -xzf talys1.95.tar
 rm talys1.95.tar
 
