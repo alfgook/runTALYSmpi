@@ -26,4 +26,5 @@ mv source/talys.f main_talys/
 cp ../talys_mod/readinput.f source/
 
 # finally we compile the object files
-cd source gfortran -c *.f
+cd source
+gfortran -c *.f
