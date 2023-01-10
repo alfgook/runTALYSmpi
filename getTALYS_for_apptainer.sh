@@ -10,7 +10,7 @@ sed "s/ home='.*'/ CALL get_environment_variable(\"TALYSDIR\", home)/" machine.f
 mv -f machine_tmp.f machine.f
 
 # now we remove the main talys.f file from the source directory
-rm source/talys.f
+rm talys.f
 
 # remove the talys structure data base, since it won't be used
 cd ..
