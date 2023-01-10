@@ -15,6 +15,32 @@
 //
 // --------------------------------------------------------------------------------------
 
+extern"C" {
+   void machine_();
+   void constants_();
+   void talysinput_();
+   void talysinitial_();
+   void talysreaction_();
+   void natural_();
+}
+
+extern "C" {
+   extern struct {
+      int flaginitpop,flagnatural,flagmicro,flagastro,flagbest,flagbestbr,flagbestend;
+   } input1l_;
+}
+
+
+void run_talys()
+{
+    machine_();
+    constants_();
+    talysinput_();
+    talysinitial_();
+    talysreaction_();
+    if(input1l_.flagnatural) natural_();
+}
+
 bool PathExists(const std::string &s)
 {
   struct stat buffer;
@@ -84,22 +110,26 @@ int main(int argc, char** argv) //int argc; char *argv[];
 
     MPI_Barrier(MPI_COMM_WORLD);
     // perform the calculations
-    std::string talys_exe(argv[argc-1]);
     job_to_do = rank + 1;
     while(job_to_do <= nbr_of_jobs) {
         // move into the directory of the job to do
-        chdir(argv[job_to_do]);
+        if(chdir(argv[job_to_do])) {
+            std::cerr << "couldn't change to the directory: " << argv[job_to_do] << std::endl;
+            exit(1);
+        }
+   
+        // redirect stdout
+        if(!std::freopen("output","w",stdout)) {
+          std::cerr << "couldn't open the output file" << std::endl;
+          exit(1);
+        }
 
-        std::string cmd = talys_exe + " < input > output";
-        // perform the talys calculation
-        system("talys < input > output");
-        //system(cmd.c_str());
+        // run talys calculation
+        run_talys();
+
         char wd[512];
         getcwd(wd,512);
-        //std::cout << "worker " << rank << "/" << nbr_of_ranks << " : " << wd << " : " << cmd << std::endl;
-
-        //std::cout << "test" << std::endl;
-        // get the next job
+        
         job_to_do += nbr_of_ranks;
     }
     

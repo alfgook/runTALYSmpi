@@ -93,16 +93,6 @@ int start_mpi_workers(const char **worker_program ,
                      MPI_COMM_SELF,
                      &everyone,
                      MPI_ERRCODES_IGNORE);
-
-
-   /*MPI_Comm_spawn(worker_program[0],
-                     argv,
-                     nbr_of_workers,
-                     MPI_INFO_NULL, 
-                     0,
-                     MPI_COMM_SELF,
-                     &everyone,
-                     MPI_ERRCODES_IGNORE);*/
    
    // Could add parallel code here. The communicator "everyone" can be used to communicate with
    // the spawned processes, which have ranks 0,.. nbr_of_workers-1 in the remote group of 
