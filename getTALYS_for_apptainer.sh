@@ -9,6 +9,11 @@ cd talys/source
 sed "s/ home='.*'/ CALL get_environment_variable(\"TALYSDIR\", home)/" machine.f  > machine_tmp.f
 mv -f machine_tmp.f machine.f
 
+# remove the talys structure data base, since it won't be used
+cd ..
+rm -r structure
+rm -r sample
+
 # then we replace the file readinput.f
 cp ../talys_mod/readinput.f source/
 
